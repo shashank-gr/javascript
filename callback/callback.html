@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const posts = [
+        {
+          title: "Title one",
+          body: "This is Title one",
+          createdAt: new Date(),
+        },
+        {
+          title: "Title two",
+          body: "This is Title two",
+          createdAt: new Date(),
+        },
+      ];
+      let intervalId;
+
+      const dispalyPosts = () => {
+        clearInterval(intervalId); //clearing the old set interval every time display post is called and create an new set interval
+
+        intervalId = setInterval(() => {
+          setTimeout(() => {
+            let output = "";
+            posts.forEach((post) => {
+              const createdAgo = Math.floor(
+                (new Date().getTime() - post.createdAt) / 1000
+              );
+
+              output += `<li> ${post.title}-${post.body}-created ${createdAgo} seconds. </li>`;
+            });
+            document.body.innerHTML = output;
+          }, 2000);
+          lastEditted();
+        }, 1000); //runs every second
+      };
+
+      const createPost = (post, cb) => {
+        setTimeout(() => {
+          posts.push({ ...post, createdAt: new Date().getTime() });
+
+          cb();
+        }, 3000);
+      };
+      const create4Post = (post, cb) => {
+        setTimeout(() => {
+          posts.push({ ...post, createdAt: new Date().getTime() });
+          cb();
+        }, 5000);
+      };
+      dispalyPosts();
+      createPost(
+        {
+          title: "title third",
+          body: "This is title third",
+        },
+        dispalyPosts
+      );
+      create4Post(
+        {
+          title: "title four",
+          body: "This is title four",
+        },
+        dispalyPosts
+      );
+    </script>
+  </body>
+</html>
