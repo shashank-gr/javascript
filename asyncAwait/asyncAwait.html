@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //promise chaining below:
+      // const promiseGetTicket = new Promise((resolve, reject) => {
+      //   setTimeout(() => {
+      //     console.log("got tickets");
+      //     return resolve("ticket");
+      //   }, 5000);
+      // });
+      // const getFood = promiseGetTicket.then((m) => {
+      //   return new Promise((resolve, reject) => {
+      //     setTimeout(() => {
+      //       console.log("got food");
+      //       return resolve(`${m} food`);
+      //     }, 3000);
+      //   });
+      // });
+
+      // const getWater = getFood.then((m) => {
+      //   return new Promise((resolve, reject) => {
+      //     setTimeout(() => {
+      //       console.log("got water");
+      //       resolve(`${m} water`);
+      //     }, 5000);
+      //   });
+      // });
+
+      //*** ALWAYS RETURN THE PROMISE INSIDE .then ; promise chaining below ticket-->food--->water-->going to movies finally
+      // const all = new Promise((resolve, reject) => {
+      //   setTimeout(() => {
+      //     console.log("got tickets");
+      //     resolve("ticket");
+      //   }, 5000);
+      // })
+      //   .then((m) => {
+      //     return new Promise((resolve, reject) => {
+      //       setTimeout(() => {
+      //         console.log("got food");
+      //         resolve(`${m}, food`);
+      //       }, 3000);
+      //     });
+      //   })
+      //   .then((m) => {
+      //     return new Promise((resolve, reject) => {
+      //       setTimeout(() => {
+      //         console.log("got water");
+      //         resolve(`${m}, water`);
+      //       }, 5000);
+      //     });
+      //   });
+      // all
+      //   .then((m) => {
+      //     return new Promise((resolve, reject) => {
+      //       setTimeout(() => {
+      //         console.log("going to movies");
+      //         resolve(`${m}, Going to movies Finally!!`);
+      //       }, 2000);
+      //     });
+      //   })
+      //   .then((m) => console.log(m));
+
+      //promise chaing below -->getticket-->getpopcorn-->getbutter
+      // const getTickets = new Promise((resolve, reject) => {
+      //   setTimeout(() => {
+      //     // console.log("got the tickets");
+      //     resolve();
+      //   }, 5000);
+      // })
+      //   .then(() => {
+      //     return new Promise((resolve, reject) => {
+      //       setTimeout(() => {
+      //         // console.log("got popcorn");
+      //         resolve();
+      //       }, 5000);
+      //     });
+      //   })
+      //   .then(() => {
+      //     return new Promise((resolve, reject) => {
+      //       setTimeout(() => {
+      //         // console.log("added butter");
+      //         resolve();
+      //       }, 5000);
+      //     });
+      //   });
+      // getTickets.then(() => console.log("all done"));
+
+      // AYNC function always returns a promise
+      const preMovie = async () => {
+        //create 3 promise-->get ticket-->get popcorn-->get butter
+        const getTicket = new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve("Got Tickets");
+          }, 5000);
+        });
+        const getPopcorn = new Promise((resolve, reject) => {
+          resolve("Got Popcorn");
+        });
+        const getButter = new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve("Got Butter");
+          }, 2000);
+        });
+        //using promise.all
+        let [ticket, popcorn, butter] = await Promise.all([
+          getTicket,
+          getButter,
+          getPopcorn,
+        ]);
+        //getting the result of promises stored
+        // let ticket = await getTicket;
+        // console.log("finally got tickets");
+
+        // let popcorn = await getPopcorn;
+        // console.log("finally got popcorn");
+
+        // let butter = await getButter;
+        // console.log("finally got butter");
+
+        return `${ticket} ${popcorn} ${butter}`;
+      };
+      preMovie()
+        .then((m) => console.log(m))
+        .catch((err) => console.log(err));
+    </script>
+  </body>
+</html>
